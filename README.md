@@ -1,14 +1,27 @@
-# Headcount 🍻
+<p align="center">
+  <img src="logo.svg" alt="Headcount logo" width="96" height="96">
+</p>
 
-**Who's in, who won, who's buying.**
+<h1 align="center">Headcount 🍻</h1>
+
+<p align="center">
+  <strong>Who's in, who won, who's buying.</strong><br>
+  Hockey · Rugby · Soccer · Basketball · Flag football · Baseball/slo-pitch
+</p>
+
+<p align="center">
+  <a href="https://derek1267.github.io/Headcount/"><strong>▶ Try it: derek1267.github.io/Headcount</strong></a>
+</p>
+
+---
 
 A rec-league manager for beer-league and intramural teams. It handles availability, schedules, scores, standings, stats, lineups, and everything else a captain normally runs through a messy group chat. It's one HTML file with no app, accounts or build step.
 
-Supports **hockey, rugby, soccer, basketball, flag football and baseball/slo-pitch**, each with its own positions, formats, standings rules and stats.
+Each sport has its own positions, formats, standings rules and stats.
 
 ## Try it
 
-Open `index.html` in any browser. It loads with two demo teams (a hockey team and a rugby team) so you can click around right away.
+Open the [live site](https://derek1267.github.io/Headcount/), or open `index.html` in any browser. It loads with two demo teams (a hockey team and a rugby team) so you can click around right away.
 
 | Role | How to get in | Demo PIN |
 |---|---|---|
@@ -126,8 +139,6 @@ These use two small Supabase Edge Functions in `supabase/functions/`. Without th
 What the captain buttons do once it's on: **Nudge** emails everyone who hasn't replied, **Ping subs** emails the next sub in the call order (tap again to ask the next one), and the dues **Remind** button emails whoever hasn't paid. Only captains can send, and only to players who have an email on file.
 
 **Bonus:** Brevo also gives you SMTP details (**SMTP & API → SMTP**). Put them in Supabase **Authentication → Emails → SMTP Settings** and sign-in links can go to anyone, not just your Supabase organization.
-
-Free Supabase projects pause after a week with no activity. Hit **Resume project** in the dashboard if that happens.
 
 Free Supabase projects pause after a week with no activity. Hit **Resume project** in the dashboard if that happens.
 
