@@ -6,10 +6,10 @@
 <title>Headcount</title>
 <meta name="description" content="Who's in, who won, who's buying. A rec and beer league team manager.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect x=%221%22 y=%221%22 width=%2238%22 height=%2238%22 rx=%2211%22 fill=%22%239b6bff%22/%3E%3Cg stroke=%22%23fff%22 stroke-width=%223.2%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M11 11v18M17 11v18M23 11v18M29 11v18%22/%3E%3C/g%3E%3Cpath d=%22M7.5 25.5 32.5 14.5%22 stroke=%22%23f5b335%22 stroke-width=%223.6%22 stroke-linecap=%22round%22/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%23a77bff%22/%3E%3Cstop offset=%221%22 stop-color=%22%237a4bd9%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2240%22 height=%2240%22 rx=%227%22 fill=%22url%28%23g%29%22/%3E%3Cg transform=%22translate%283 3%29 scale%28.85%29%22%3E%3Cg stroke=%22%23fff%22 stroke-width=%223.2%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M11 11v18M17 11v18M23 11v18M29 11v18%22/%3E%3C/g%3E%3Cpath d=%22M7.5 25.5 32.5 14.5%22 stroke=%22%23f5b335%22 stroke-width=%223.6%22 stroke-linecap=%22round%22/%3E%3C/g%3E%3C/svg%3E" type="image/svg+xml">
 <link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="alternate icon" href="favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#110c1d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -557,6 +557,8 @@ footer{color:var(--muted);font-size:12.5px;text-align:center;margin-top:24px}
 .installbtns{display:flex;gap:8px}
 @media (max-width:480px){.installcard{grid-template-columns:44px minmax(0,1fr)}.installbtns{grid-column:1/-1}.installbtns .btn{flex:1}}
 .steps{margin:0 0 12px;padding-left:22px;display:grid;gap:8px}.kbd{display:inline-block;padding:0 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface2)}
+.steps li{font-weight:400}
+.shareic{width:20px;height:20px;vertical-align:-4px;color:var(--violet-2);margin:0 2px}
 </style>
 </head>
 <body>
@@ -2928,7 +2930,7 @@ function installCard(){
 function openInstallHelp(){
   modalRoot().innerHTML=`<div class="overlay" data-act="close"><div class="modal" role="dialog" aria-modal="true" style="max-width:420px">
     <h2>Add Headcount to your home screen</h2>
-    ${isIOS()?`<ol class="steps"><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button <span class="kbd">⬆︎</span> at the bottom of the screen.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>. Headcount now opens full screen from its own icon.</li></ol>`
+    ${isIOS()?`<ol class="steps"><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button <svg class="shareic" viewBox="0 0 24 24" aria-label="Share"><path d="M12 3.5v11M8.2 7.2 12 3.4l3.8 3.8M8.5 10.5H7A1.5 1.5 0 0 0 5.5 12v7A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5v-7a1.5 1.5 0 0 0-1.5-1.5h-1.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg> in Safari’s toolbar. (Don’t see it? Tap <b>•••</b> first.)</li><li>Tap <b>Add to Home Screen</b>. You may need to scroll down or tap <b>More</b> to find it.</li><li>Tap <b>Add</b>. Headcount now opens full screen from its own icon.</li></ol>`
       :`<ol class="steps"><li>Open this page in <b>Chrome</b>.</li><li>Tap the <b>⋮</b> menu at the top right.</li><li>Tap <b>Add to Home screen</b> (or <b>Install app</b>).</li><li>Tap <b>Install</b>. Headcount now opens full screen from its own icon.</li></ol>`}
     <p class="meta sm">Your team, your name and your In/Out all carry over. Nothing to sign up for.</p>
     <div class="actions" style="justify-content:flex-end"><button class="btn primary" data-act="close">Got it</button></div></div></div>`;
