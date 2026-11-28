@@ -137,6 +137,8 @@ These use two small Supabase Edge Functions in `supabase/functions/`. Without th
 
 **4. Turn on automatic reminders.** Open `supabase/003_reminder_cron.sql`, replace `YOUR-CRON-SECRET` with the same `CRON_SECRET`, and run it in the SQL Editor. Every 30 minutes it emails players who haven't replied (as many hours before the game as the captain picked in Team settings), and 24 hours out it emails the subs if the team is short.
 
+The same function sends **Message captain** emails from team pages. The other captain can just hit reply. Each captain can send 5 a day, and only to teams in their own league.
+
 What the captain buttons do once it's on: **Nudge** emails everyone who hasn't replied, **Ping subs** emails the next sub in the call order (tap again to ask the next one), and the dues **Remind** button emails whoever hasn't paid. Only captains can send, and only to players who have an email on file.
 
 **Bonus:** Brevo also gives you SMTP details (**SMTP & API → SMTP**). Put them in Supabase **Authentication → Emails → SMTP Settings** and sign-in links can go to anyone, not just your Supabase organization.
