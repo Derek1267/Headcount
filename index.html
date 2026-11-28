@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Headcount: Rec League Manager Prototype</title>
+<title>Headcount</title>
+<meta name="description" content="Who's in, who won, who's buying. A rec and beer league team manager.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect x=%221%22 y=%221%22 width=%2238%22 height=%2238%22 rx=%2211%22 fill=%22%239b6bff%22/%3E%3Cg stroke=%22%23fff%22 stroke-width=%223.2%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M11 11v18M17 11v18M23 11v18M29 11v18%22/%3E%3C/g%3E%3Cpath d=%22M7.5 25.5 32.5 14.5%22 stroke=%22%23f5b335%22 stroke-width=%223.6%22 stroke-linecap=%22round%22/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="alternate icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#110c1d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Headcount">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -248,7 +259,7 @@ table.spirit td:nth-child(4),table.spirit th:nth-child(4){width:52px}
 .who button[disabled]{opacity:.35}
 @media (max-width:560px){
   nav.tabs{display:none}
-  .botnav{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:12;background:rgba(17,12,29,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:4px 2px calc(4px + env(safe-area-inset-bottom))}
+  .botnav{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:12;background:var(--bg);border-top:1px solid var(--line);padding:4px 2px calc(4px + env(safe-area-inset-bottom))}
   .botnav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;min-height:52px;color:var(--muted);font-size:10.5px;font-weight:600}
   .botnav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .botnav button.on{color:var(--violet-2)}
@@ -273,7 +284,7 @@ label.chk.online{align-items:flex-start;background:var(--surface2);border-radius
 label.chk.online input{margin-top:3px}
 /* ---- round 8 ---- */
 .av{border-radius:50%;object-fit:cover;flex:none;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:8px;background:var(--surface2)}
-.av.ini{background:linear-gradient(135deg,#3a2a6b,#251a45);color:#e8dfff;font-weight:700;letter-spacing:.02em}
+.av.ini{background:linear-gradient(135deg,#6d45c9,#4a2d94);color:#f3edff;font-weight:700;letter-spacing:.02em}
 .crown{font-size:12px;margin-left:5px;flex:none}
 .gtag.guest{background:rgba(124,196,255,.15);color:var(--blue);margin:0 0 0 6px}
 .whohd{display:flex;align-items:center}
@@ -309,7 +320,7 @@ label.chk.online input{margin-top:3px}
 [data-theme=light] .pos.spec{background:rgba(168,104,12,.12);color:var(--gold)}
 [data-theme=light] .menu button:hover,[data-theme=light] .menu button.on,[data-theme=light] .sports button.on{background:#efe8ff}
 [data-theme=light] .teampick:hover,[data-theme=light] .btn:hover{border-color:#c9bce8}
-[data-theme=light] .botnav{background:rgba(255,255,255,.94)}
+[data-theme=light] .botnav{background:#fff}
 [data-theme=light] .recap{background:linear-gradient(160deg,#f1eaff,#ffffff);border-color:#d6c9f5}
 [data-theme=light] .rstats div{background:rgba(122,75,217,.07)}
 [data-theme=light] .rb{border-top-color:rgba(29,21,48,.08)}
@@ -486,6 +497,66 @@ footer{color:var(--muted);font-size:12.5px;text-align:center;margin-top:24px}
 .inp.mini{padding:7px 8px;font-size:13.5px;min-width:0}.inp.guess{border-color:rgba(255,200,60,.7);background:rgba(255,200,60,.08)}
 .whohd{display:flex;align-items:center;gap:8px}
 @media (max-width:560px){.agrow{grid-template-columns:1fr 1fr 58px;padding-bottom:8px;border-bottom:1px solid var(--line)}.agrow>:nth-child(4),.agrow>:nth-child(5){grid-column:1/-1}}
+
+.who button .whohd{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text);margin:0}
+.who button .whohd>span{display:inline;font-size:inherit;font-weight:inherit;color:inherit}
+.who button .av.ini{display:inline-flex;align-items:center;justify-content:center;font-weight:800;line-height:1;margin:0;background:linear-gradient(135deg,#6d45c9,#4a2d94);color:#f3edff}
+[data-theme=light] .who button .av.ini{background:linear-gradient(135deg,#e4d8ff,#d3c2fb);color:#3b2a6b}
+.who button .whohd+span{margin-top:4px;padding-left:34px}
+
+/* ---- team pages ---- */
+.tlink{background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:left}.tlink:hover{color:var(--violet);text-decoration:underline}
+.tphead{display:flex;align-items:center;gap:14px;margin:-4px 0 14px}
+.tpbadge{flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:16px;color:#fff;background:linear-gradient(135deg,var(--j1,#7a4bd9) 55%,var(--j2,#f3effb) 55%);text-shadow:0 1px 2px rgba(0,0,0,.6);border:1px solid var(--line)}
+.tpstats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.tpstats>div{flex:1 1 56px;background:var(--surface2);border-radius:10px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.tpstats b{font-size:17px}.tpstats span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.tpf{display:inline-flex;gap:2px;justify-content:center}.tpf i{font-style:normal;font-size:11px;width:16px;height:16px;border-radius:4px;display:inline-grid;place-items:center}
+.tpf .fW{background:rgba(70,200,120,.25);color:#6ee7a0}.tpf .fL{background:rgba(240,80,80,.22);color:#ff9a9a}.tpf .fD{background:rgba(255,200,60,.2);color:#ffd36b}
+[data-theme=light] .tpf .fW{color:#17803d}[data-theme=light] .tpf .fL{color:#b42323}[data-theme=light] .tpf .fD{color:#8a6100}
+.tpabout{margin:0 0 12px;font-style:italic;color:var(--muted)}
+.tpgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:14px}
+.tpitem{display:flex;flex-direction:column;gap:3px;min-width:0}.tplab{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.tpjs{display:flex;gap:12px;flex-wrap:wrap}.tpjersey{display:inline-flex;align-items:center;gap:6px}.tpjersey .sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--line)}
+.tph{font-size:14px;margin:4px 0 8px}
+.tpitem a{color:var(--violet);text-decoration:none}.tpitem a:hover{text-decoration:underline}
+.tpstats>.tpform{flex:2 1 100px}
+.tproster{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px}
+.tpp{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:var(--surface2)}
+.tpnum{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;text-align:right}
+.tptiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.tptile{display:grid;grid-template-columns:14px minmax(0,1fr) auto;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:inherit;cursor:pointer;text-align:left}
+.tptile:hover,.tptile.us{border-color:var(--violet)}.tptile .sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--line)}
+
+/* scroll areas: keep content clear of the scrollbar, slim themed bar */
+.emgrid,.awaylist,.ptable.paste,.lvlog,.agtable,.bsrounds{scrollbar-gutter:stable;padding-right:10px}
+.modal,.emgrid,.awaylist,.ptable.paste,.lvlog,.agtable,.bsrounds,.scroll,nav.tabs{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+
+/* ---- layout polish ---- */
+.kit{flex-wrap:wrap;row-gap:4px}.kit>.sw{flex:none}.kit>span:nth-child(2){flex:1 1 0;min-width:0}
+/* tables that scroll sideways show a soft edge so it's obvious there's more */
+.scroll{background:linear-gradient(to right,var(--surface) 30%,transparent) left/24px 100% no-repeat local,linear-gradient(to left,var(--surface) 30%,transparent) right/24px 100% no-repeat local,
+  radial-gradient(farthest-side at 0 50%,rgba(0,0,0,.45),transparent) left/12px 100% no-repeat scroll,radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.45),transparent) right/12px 100% no-repeat scroll}
+[data-theme=light] .scroll{background:linear-gradient(to right,var(--surface) 30%,transparent) left/24px 100% no-repeat local,linear-gradient(to left,var(--surface) 30%,transparent) right/24px 100% no-repeat local,
+  radial-gradient(farthest-side at 0 50%,rgba(60,30,120,.18),transparent) left/12px 100% no-repeat scroll,radial-gradient(farthest-side at 100% 50%,rgba(60,30,120,.18),transparent) right/12px 100% no-repeat scroll}
+@media (max-width:560px){
+  .kit .link{flex-basis:100%;text-align:left;padding-left:26px}
+  .gacts{flex-wrap:wrap}.gacts .btn{flex:1 1 130px;white-space:nowrap}
+}
+@media (max-width:430px){
+  .ptable.roster .av{display:none}
+  .ptable.avail .prow:not(.hd)>span:nth-child(2),.ptable.roster .prow:not(.hd)>span:nth-child(3){flex-direction:column;align-items:flex-start;justify-content:center;line-height:1.2;gap:1px}
+  .ptable.avail .prow:not(.hd)>span:nth-child(2) .ell,.ptable.roster .prow:not(.hd)>span:nth-child(3) .ell{max-width:100%}
+  .ptable.roster{grid-template-columns:28px minmax(0,1.3fr) minmax(0,1fr) 44px 84px}
+  .ptable.roster.ro{grid-template-columns:28px minmax(0,1.3fr) minmax(0,1fr) 44px}
+}
+.nw{white-space:nowrap}
+.fldhd{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:6px 0 4px;border-top:1px solid var(--line);padding-top:14px}
+.btn:disabled{opacity:.6;cursor:default}
+.installcard{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:12px}
+.installcard img{border-radius:11px}.installcard div:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0}
+.installbtns{display:flex;gap:8px}
+@media (max-width:480px){.installcard{grid-template-columns:44px minmax(0,1fr)}.installbtns{grid-column:1/-1}.installbtns .btn{flex:1}}
+.steps{margin:0 0 12px;padding-left:22px;display:grid;gap:8px}.kbd{display:inline-block;padding:0 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface2)}
 </style>
 </head>
 <body>
@@ -699,7 +770,10 @@ function sortPlayers(t, list){ const order=SPORTS[t.sport].positions.map(p=>p[0]
 
 function stripCloud(s){ const o={...s, teams:{}, avail:{}, order:s.order.filter(id=>s.teams[id]&&!s.teams[id].cloud)};
   o.order.forEach(id=>{ o.teams[id]=s.teams[id]; o.avail[id]=s.avail[id]; }); if(!o.teams[o.current]) o.current=o.order[0]; return o; }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(stripCloud(S))); }catch(e){} if(typeof cloudSave==='function') cloudSave(); }
+let saveT=null;
+function flushSave(){ if(saveT===null) return; clearTimeout(saveT); saveT=null; try{ localStorage.setItem(KEY, JSON.stringify(stripCloud(S))); }catch(e){} }
+function save(){ if(saveT===null) saveT=setTimeout(flushSave,400); if(typeof cloudSave==='function') cloudSave(); }
+addEventListener('pagehide', flushSave); document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='hidden') flushSave(); });
 
 /* ---------- headcount ---------- */
 function headcount(t,g){
@@ -776,10 +850,35 @@ const COLS = {
 };
 
 /* ---------- render ---------- */
+/* ---------- fast DOM update: patch only what changed instead of rebuilding the page ---------- */
+function morph(root, html){
+  const tpl=document.createElement('template'); tpl.innerHTML=html; patchKids(root, tpl.content);
+}
+function sameNode(a,b){ return a.nodeType===b.nodeType && (a.nodeType!==1 || (a.tagName===b.tagName && (a.tagName!=='INPUT'||a.type===b.type))); }
+function patchKids(a,b){
+  let ac=a.firstChild, bc=b.firstChild;
+  while(bc){ const next=bc.nextSibling;
+    if(!ac){ a.appendChild(bc); }
+    else if(sameNode(ac,bc)){ patchNode(ac,bc); ac=ac.nextSibling; }
+    else { a.replaceChild(bc,ac); ac=bc.nextSibling; }
+    bc=next; }
+  while(ac){ const n=ac.nextSibling; a.removeChild(ac); ac=n; }
+}
+function patchNode(a,b){
+  if(a.nodeType!==1){ if(a.nodeValue!==b.nodeValue) a.nodeValue=b.nodeValue; return; }
+  for(const at of [...a.attributes]) if(!b.hasAttribute(at.name)) a.removeAttribute(at.name);
+  for(const at of b.attributes) if(a.getAttribute(at.name)!==at.value) a.setAttribute(at.name,at.value);
+  const tg=a.tagName;
+  if(tg==='INPUT'){ if(a.type==='checkbox'||a.type==='radio') a.checked=b.hasAttribute('checked'); else if(a.type!=='file'){ const v=b.getAttribute('value')||''; if(a.value!==v) a.value=v; } return; }
+  if(tg==='TEXTAREA'){ if(a.value!==b.textContent) a.value=b.textContent; patchKids(a,b); return; }
+  if(tg==='SELECT'){ const opts=[...b.querySelectorAll('option')], i=Math.max(0,opts.findIndex(o=>o.hasAttribute('selected'))); patchKids(a,b); if(a.selectedIndex!==i) a.selectedIndex=i; return; }
+  patchKids(a,b);
+}
+
 function render(){
   const oldNav=document.querySelector('nav.tabs'), navX=oldNav?oldNav.scrollLeft:0;
   const t=ensure(team()), sp=SPORTS[t.sport];
-  document.getElementById('app').innerHTML = `
+  morph(document.getElementById('app'), `
   <header>
     <div class="brand">
       <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="11" fill="#9b6bff"/><g stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M11 11v18M17 11v18M23 11v18M29 11v18"/></g><path d="M7.5 25.5 32.5 14.5" stroke="#f5b335" stroke-width="3.6" stroke-linecap="round"/></svg>
@@ -804,7 +903,7 @@ function render(){
     ${[['next','Next game'],['schedule','Schedule'],['standings','Standings'],['stats','Stats'],['roster','Roster'],['league','League']].map(([k,l])=>`<button data-act="tab" data-v="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('')}
   </nav>
   <main>${({next:viewNext,schedule:viewSchedule,standings:viewStandings,stats:viewStats,roster:viewRoster,league:viewLeague})[S.tab](t)}</main>${bottomNav()}
-  <footer>Prototype with demo data. Changes stay in this browser only. <button class="link" data-act="reset">Reset demo</button></footer>`;
+  <footer>Prototype with demo data. Changes stay in this browser only. <button class="link" data-act="reset">Reset demo</button></footer>`);
   // keep the tab strip where it was, then nudge it just enough to show the active tab
   const nav=document.querySelector('nav.tabs'); if(nav){ nav.scrollLeft=navX; const on=nav.querySelector('.on');
     if(on){ const l=on.offsetLeft, r=l+on.offsetWidth, pad=24;
@@ -889,7 +988,7 @@ function viewNext(t){
     <div class="actions">
       <button class="btn live" data-act="live">${t.live&&t.live.gid===g.id?'🔴 Back to live scoring':'▶ Live scoring'}</button>
       ${unmet.map(c=>`<button class="btn primary" data-act="ping" data-v="${c.pos.join(',')}">Find a ${esc(c.label.toLowerCase().replace(/s$/,''))}</button>`).join('')}
-      <button class="btn" data-act="nudge">🔔 Nudge ${h.noReply.length} no-reply</button>
+      ${h.noReply.length?`<button class="btn" data-act="nudge">🔔 Nudge ${h.noReply.length} no-reply</button>`:`<button class="btn" disabled>✓ Everyone replied</button>`}
       <button class="btn" data-act="ping" data-v="">📣 Ping subs (${subs.length})</button>
       <button class="btn" data-act="lineup">🧩 ${t.lineups[g.id]?'Edit lineup':'Build lineup'}</button>
       <button class="btn" data-act="calendar">📅 Calendar</button>
@@ -926,7 +1025,7 @@ function viewStandings(t){
   const d=divSel(t,'div'), rows=standings(t,d), cols=COLS[t.sport], val=(r,k)=>typeof k==='function'?k(r):r[k];
   return `<div class="card">${cardHd(`${esc(t.league.replace(/,?\s*Div(?:ision)?\.?\s*([A-Z]|\d+)\s*$/i,''))} · ${esc(d.name)}`)}${divPills(t,'div')}<div class="scroll"><table>
     <tr><th>#</th><th>Team</th>${cols.map(c=>`<th>${c[0]}</th>`).join('')}</tr>
-    ${rows.map((r,i)=>`<tr class="${r.team===t.name?'us':''}"><td>${i+1}</td><td>${esc(r.team)}</td>${cols.map(c=>`<td class="${c[2]?'pts':''}">${val(r,c[1])}</td>`).join('')}</tr>`).join('')}
+    ${rows.map((r,i)=>`<tr class="${r.team===t.name?'us':''}"><td>${i+1}</td><td><button class="tlink" data-act="teampage" data-v="${esc(r.team)}">${esc(r.team)}</button></td>${cols.map(c=>`<td class="${c[2]?'pts':''}">${val(r,c[1])}</td>`).join('')}</tr>`).join('')}
   </table></div><p class="note">${esc(SPORTS[t.sport].note)}</p></div>`;
 }
 
@@ -1220,6 +1319,7 @@ function openSettings(){
     <label class="chk" style="margin:-4px 0 12px"><input type="checkbox" id="stShort" ${t.rem.short?'checked':''}> Email subs automatically if we’re short 24 hours before</label>
     ${t.cloud?'':`<label class="fld"><span>Captain PIN</span><input class="inp" id="stPin" inputmode="numeric" maxlength="6" value="${esc(t.pin)}"></label>`}
     ${jerseyFields(t)}
+    ${profileFields(t)}
     ${sp.formats.length>1?`<label class="fld"><span>Format</span><select class="inp" id="stFormat">${sp.formats.map(f=>`<option value="${f.v}" ${t.format===f.v?'selected':''}>${f.l}</option>`).join('')}</select></label>`:''}
     <div class="err" id="err"></div>
     <div class="actions" style="justify-content:space-between">
@@ -1326,8 +1426,8 @@ function rotationCard(t,g){
 function reminderNote(t,g){
   if(!t.rem.hours) return `<p class="note">📧 Auto-reminders are off. Turn them on in team settings.</p>`;
   const at=new Date(gameDT(g).getTime()-t.rem.hours*3600e3), h=headcount(t,g), noEmail=t.players.filter(p=>!p.email).length;
-  return `<p class="note remind">📧 Auto-reminder emails go out <b>${fmtDT(at)}</b> to anyone who hasn’t replied (${h.noReply.length} right now).${t.rem.short?` If you’re still short 24 hours before, subs get a “we’re short” email.`:''}
-    ${noEmail?`<button class="link" data-act="emails">${noEmail} player${noEmail===1?'':'s'} have no email yet</button>`:''}</p>`;
+  return `<p class="note remind">📧 ${at<new Date()?`Auto-reminder emails went out <b>${fmtDT(at)}</b> to anyone who hadn’t replied. ${h.noReply.length} still haven’t.`:`Auto-reminder emails go out <b>${fmtDT(at)}</b> to anyone who hasn’t replied (${h.noReply.length} right now).`}${t.rem.short?` If you’re still short 24 hours before, subs get a “we’re short” email.`:''}
+    ${noEmail?`<button class="link" data-act="emails">${noEmail} player${noEmail===1?' has':'s have'} no email yet</button>`:''}</p>`;
 }
 function chirpCard(t,g){
   const list=(t.chirps[g.id]||[]), me=pById(t,S.me[t.id]), canPost=isCap()||me;
@@ -1526,6 +1626,7 @@ function viewLeague(t){
       <div class="anns">${t.ann.length?t.ann.map(a=>`<div class="ann"><span class="meta sm">${new Date(a.at).toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</span><span>${esc(a.text)}</span>${org?`<button class="link x" data-act="anndel" data-v="${a.id}" aria-label="Delete announcement">✕</button>`:''}</div>`).join(''):'<p class="meta">No announcements yet.</p>'}</div>
     </div>
     ${(t.cloud?t.isOrg:isOrg()||isCap())?`<div class="card">${cardHd('🤝 Invite another team', '<button class="btn small primary" data-act="leagueinvite">Get invite link</button>')}<p class="meta" style="margin:-4px 0 0">Bring other captains into ${esc(t.league)}. Their games, scores and spirit ratings go league-wide, and each captain runs their own roster.</p></div>`:''}
+    ${teamsCard(t)}
     ${bracket(t)}
     ${spiritTable(t,divSel(t,'div'))}
     ${disciplineCard(t)}
@@ -1766,6 +1867,7 @@ function openPlayer(t,id){
     ${h?`<label class="fld"><span>${h.label}</span><select class="inp" id="pHand"><option value="">—</option>${h.opts.map(o=>`<option ${p.hand===o?'selected':''}>${o}</option>`).join('')}</select></label>`:''}
     <label class="fld"><span>Email</span><input class="inp" id="pEmail" type="email" maxlength="80" value="${esc(p.email||'')}" placeholder="For reminders"></label>
     <label class="chk"><input type="checkbox" id="pSub" ${p.sub?'checked':''}> Sub (not a regular)</label>
+    <label class="chk"><input type="checkbox" id="pHide" ${p.hide?'checked':''}> Hide name from other teams</label>
     ${p.guest?'':(t.cloud&&!t.claims[p.id]?`<p class="note" style="margin:6px 0 0">👑 They can be made a co-captain once they’ve opened the invite link on their phone.</p>`:(t.cloud&&t.claims[p.id]===CLOUD.uid?'':`<div class="cocaprow"><span>👑 ${isCoCap(t,p)?'Co-captain: can run the team with you':'Make co-captain so they can enter scores and manage the team'}</span><button class="btn small" data-act="cocap" data-v="${p.id}">${isCoCap(t,p)?'Remove':'Make co-captain'}</button></div>`))}
     ${g?`<label class="chk" style="margin-top:6px"><input type="checkbox" id="pSusp" ${susp?'checked':''}> Suspended for the next game (${fmtDate(g.date)})</label>`:''}
     <div class="err" id="err"></div>
@@ -1794,7 +1896,7 @@ function spiritTable(t,d){
       if(d.mine) t.games.filter(g=>g.final&&t.spirit[g.id]&&oppOf(t,g)===n).forEach(g=>{ sum=sum-base+t.spirit[g.id].score; }); }
     return {team:n, avg:c?sum/c:0, c}; }).sort((a,b)=>b.avg-a.avg);
   return `<div class="card">${cardHd('🤝 Spirit standings')}<div class="scroll"><table class="spirit"><tr><th>#</th><th>Team</th><th>Rated</th><th>Avg</th><th class="sbar"></th></tr>
-    ${rows.map((r,i)=>`<tr class="${r.team===t.name?'us':''}"><td>${i+1}</td><td>${esc(r.team)}</td><td>${r.c}</td><td class="pts">${r.avg.toFixed(1)}</td><td class="sbar"><span class="sb"><i style="width:${r.avg/5*100}%"></i></span></td></tr>`).join('')}</table></div>
+    ${rows.map((r,i)=>`<tr class="${r.team===t.name?'us':''}"><td>${i+1}</td><td><button class="tlink" data-act="teampage" data-v="${esc(r.team)}">${esc(r.team)}</button></td><td>${r.c}</td><td class="pts">${r.avg.toFixed(1)}</td><td class="sbar"><span class="sb"><i style="width:${r.avg/5*100}%"></i></span></td></tr>`).join('')}</table></div>
     <p class="note">Average sportsmanship rating out of 5, given by opponents after each game.</p></div>`;
 }
 function disciplineCard(t){
@@ -1929,7 +2031,7 @@ function extraAct2(act,v,el,t,e){
       if(num!=null&&(num<0||num>99)) return err.textContent='Numbers go from 0 to 99.', false;
       const clash=num!=null&&t.players.find(x=>x.id!==p.id&&x.num===num); if(clash) return err.textContent=`#${num} is already ${fullName(clash)}’s number.`, false;
       if(em&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return err.textContent='That email doesn’t look right.', false;
-      Object.assign(p,{first:q('pFirst').value.trim(), last:q('pLast').value.trim(), num, pos:q('pPos').value, sub:q('pSub').checked}); if(em) p.email=em; else delete p.email;
+      Object.assign(p,{first:q('pFirst').value.trim(), last:q('pLast').value.trim(), num, pos:q('pPos').value, sub:q('pSub').checked, hide:q('pHide').checked}); if(em) p.email=em; else delete p.email;
       if(q('pHand')) p.hand=q('pHand').value||undefined;
       if(q('pSusp')){ if(q('pSusp').checked) t.manSusp[p.id]=g.id; else if(t.manSusp[p.id]===g.id) delete t.manSusp[p.id]; }
       closeModal(); toast('Player saved'); return true; }
@@ -1998,7 +2100,7 @@ const TBL=[ // table, primary key, who may write it
   ['ride_needs',['game_id','player_id'],'any'],['claim_requests',['id'],'any'],['spirit_ratings',['game_id','rater_team_id'],'cap'],
   ['announcements',['id'],'org'],['free_agents',['id'],'any']];
 function gateOk(t,g){ const cap=t.role==='captain'; return g==='any'||(g==='cap'&&cap)||(g==='org'&&t.isOrg)||(g==='capOrg'&&(cap||t.isOrg)); }
-function teamSettings(t){ return {venues:t.venues||{}, tz:t.tz||(Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC'), rem:t.rem, innLimit:t.innLimit, dues:t.dues, beer:{order:t.beer.order, shift:t.beer.shift}, rot:t.rot, kit:t.kit, subOrder:t.subOrder, manSusp:t.manSusp, suspRule:t.suspRule, playoffs:t.playoffs, jerseys:t.jerseys, posColors:t.posColors}; }
+function teamSettings(t){ return {venues:t.venues||{}, tz:t.tz||(Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC'), rem:t.rem, innLimit:t.innLimit, dues:t.dues, beer:{order:t.beer.order, shift:t.beer.shift}, rot:t.rot, kit:t.kit, subOrder:t.subOrder, manSusp:t.manSusp, suspRule:t.suspRule, playoffs:t.playoffs, jerseys:t.jerseys, posColors:t.posColors, profile:t.profile}; }
 function gameRow(t,g,divId,season){
   const st=g.cancelled?'cancelled':g.tbd?'postponed':g.final?'final':'scheduled', f=st==='final';
   return {id:g.id, league_id:t.leagueId, division_id:divId, round:g.round||null, starts_at:g.tbd?null:toTs(g.date,g.time), venue:nz(g.venue),
@@ -2014,7 +2116,7 @@ function rowsOf(t){
   add('teams',{id:t.id, name:t.name, sport:t.sport, format:t.format, league_id:t.leagueId, division_id:t.divId, settings:teamSettings(t)});
   t.games.forEach(g=>add('games',gameRow(t,g,t.divId))); t.divs.forEach(d=>d.games.forEach(g=>add('games',gameRow(t,g,d.id))));
   (t.past||[]).forEach(ps=>ps.games.forEach(g=>add('games',gameRow(t,g,g.div||t.divId,ps.season))));
-  t.players.forEach(p=>{ add('players',{id:p.id, team_id:t.id, first_name:p.first, last_name:p.last||'', pos:p.pos, num:p.num??null, hand:nz(p.hand), is_sub:!!p.sub, cert:p.cert||{}, guest_game:p.guest||null});
+  t.players.forEach(p=>{ add('players',{id:p.id, team_id:t.id, first_name:p.first, last_name:p.last||'', pos:p.pos, num:p.num??null, hand:nz(p.hand), is_sub:!!p.sub, cert:p.cert||{}, guest_game:p.guest||null, hide_public:!!p.hide});
     if(p.email) add('player_private',{player_id:p.id, email:p.email}); });
   Object.entries(S.avail[t.id]||{}).forEach(([gid,a])=>Object.entries(a).forEach(([pid,s])=>{ if(s&&pids.has(pid)) add('availability',{game_id:gid, player_id:pid, status:s}); }));
   Object.entries(t.stats||{}).forEach(([gid,line])=>Object.entries(line).forEach(([key,data])=>{ const k=key.startsWith('k:'), pid=k?key.slice(2):key, p=pById(t,pid); if(!p) return;
@@ -2048,7 +2150,7 @@ async function syncTeam(id){
       for(const [k,r] of a){ if(b.has(k)) continue; let q=sb.from(tb).delete(); pk.forEach(c=>q=q.eq(c,r[c])); await run(q); } }
     await syncBeer(t);
     const next={...prev}; TBL.forEach(([tb,,gate])=>{ if(gateOk(t,gate)) next[tb]=cur[tb]||new Map(); }); CLOUD.synced[id]=next;
-    setSyncBadge('saved');
+    setSyncBadge('saved'); CLOUD.lastWrite=Date.now();
   }catch(err){ setSyncBadge('error'); toast(`Couldn’t save that: ${friendlyErr(err)}. Reloading the latest.`); await refreshTeam(id,true); }
   finally{ CLOUD.busy=false; if(CLOUD.again){ CLOUD.again=false; syncTeam(S.current); } }
 }
@@ -2098,10 +2200,10 @@ async function loadTeam(id){
     divs:divisions.filter(d=>d.id!==team.division_id).map(d=>{ const gs=curGames.filter(g=>g.division_id===d.id).map(toGame); return {id:d.id, name:d.name, teams:namesIn(d.id,gs), games:gs}; }),
     hcTeams:Object.fromEntries(leagueTeams.map(x=>[x.name,x.id])), role, memberRoles, isOrg:admins.length>0, season, leagueSettings:lset, venues:s.venues||{}, tz:s.tz,
     past:Object.entries(games.filter(g=>(g.season||'Season 1')!==season).reduce((m,g)=>{ (m[g.season||'Season 1'] ||= []).push({...toGame(g), div:g.division_id}); return m; },{})).map(([season,gs])=>({season, games:gs})).sort((a,b)=>Math.max(...b.games.map(g=>Date.parse(g.date)))-Math.max(...a.games.map(g=>Date.parse(g.date)))), joinCode:(secret[0]||{}).join_code||null,
-    players:players.map(p=>({id:p.id, first:p.first_name, last:p.last_name, pos:p.pos, num:p.num, hand:p.hand||undefined, sub:p.is_sub, guest:p.guest_game||undefined, photoV:p.photo_v||0,
+    players:players.map(p=>({id:p.id, first:p.first_name, last:p.last_name, pos:p.pos, num:p.num, hand:p.hand||undefined, sub:p.is_sub, hide:p.hide_public||undefined, guest:p.guest_game||undefined, photoV:p.photo_v||0,
       cert:p.cert&&Object.keys(p.cert).length?p.cert:undefined, ...((priv.find(x=>x.player_id===p.id)||{}).email?{email:priv.find(x=>x.player_id===p.id).email}:{})})),
     stats:{}, lineups:{}, chirps:{}, mvp:{}, rides:{}, claims:{}, claimReq:[], spirit:{}, spiritRecv:{}, ann:[], fa:[],
-    beer:{order:(s.beer||{}).order||[], shift:(s.beer||{}).shift||0, rounds:{}}, rot:s.rot||{shift:0}, kit:s.kit||{}, jerseys:s.jerseys, posColors:s.posColors, oppJerseys:Object.fromEntries(leagueTeams.filter(x=>x.id!==id&&x.settings&&x.settings.jerseys).map(x=>[x.name,x.settings.jerseys])), subOrder:s.subOrder||[], manSusp:s.manSusp||{},
+    beer:{order:(s.beer||{}).order||[], shift:(s.beer||{}).shift||0, rounds:{}}, rot:s.rot||{shift:0}, kit:s.kit||{}, jerseys:s.jerseys, posColors:s.posColors, profile:s.profile, oppJerseys:Object.fromEntries(leagueTeams.filter(x=>x.id!==id&&x.settings&&x.settings.jerseys).map(x=>[x.name,x.settings.jerseys])), subOrder:s.subOrder||[], manSusp:s.manSusp||{},
     suspRule:s.suspRule||{}, playoffs:s.playoffs||{byDiv:{}}, dues:s.dues||{amount:120,paid:{}}, rem:s.rem||{hours:48,short:true}, innLimit:s.innLimit||0, pin:'', orgPin:''};
   players.forEach(p=>{ if(p.claimed_by) t.claims[p.id]=p.claimed_by; });
   stats.forEach(r=>{ (t.stats[r.game_id] ||= {})[r.kind==='keeper'&&kp&&kp.both?'k:'+r.player_id:r.player_id]=r.data; });
@@ -2133,6 +2235,9 @@ async function refreshTeam(id,force){
   try{ await addCloudTeam(id,false); }catch(e){ toast(`Couldn’t load the team: ${friendlyErr(e)}`); return; }
   if(S.current===id&&!document.querySelector('.overlay')) render();
 }
+let renderT=null;
+function renderSoon(){ clearTimeout(renderT); renderT=setTimeout(()=>{ const ae=document.activeElement;
+  if(document.querySelector('.overlay')||(ae&&/INPUT|TEXTAREA|SELECT/.test(ae.tagName))) return renderSoon(); render(); },120); }
 function scheduleRefresh(id){
   clearTimeout(CLOUD.refreshT[id]);
   CLOUD.refreshT[id]=setTimeout(()=>{ const ae=document.activeElement; if(CLOUD.busy||(ae&&/INPUT|TEXTAREA|SELECT/.test(ae.tagName))||document.querySelector('.overlay')){ scheduleRefresh(id); return; } refreshTeam(id); }, 700);
@@ -2140,7 +2245,24 @@ function scheduleRefresh(id){
 function subscribe(t){
   if(CLOUD.chans[t.id]||!CLOUD.sb.channel) return;
   const ch=CLOUD.sb.channel('team-'+t.id);
-  ['availability','chirps','games','rides','ride_riders','players'].forEach(tb=>ch.on('postgres_changes',{event:'*',schema:'public',table:tb},()=>scheduleRefresh(t.id)));
+  // a teammate's In/Out is patched straight in (no reload); everything else reloads the team,
+  // filtered to this team or league, and our own saves bouncing back are ignored
+  const own=()=>Date.now()-(CLOUD.lastWrite||0)<2500, later=()=>{ if(!own()) scheduleRefresh(t.id); };
+  ch.on('postgres_changes',{event:'*',schema:'public',table:'availability'},pl=>{
+    const r=pl.new&&pl.new.player_id?pl.new:pl.old||{}, tm=S.teams[t.id]; if(!tm||!r.player_id||!r.game_id) return;
+    if(!tm.players.some(p=>p.id===r.player_id)) return;
+    const A=(S.avail[t.id] ||= {}), G=(A[r.game_id] ||= {}), v=pl.eventType==='DELETE'?undefined:pl.new.status;
+    if(G[r.player_id]===v) return;
+    if(v===undefined) delete G[r.player_id]; else G[r.player_id]=v;
+    const prev=CLOUD.synced[t.id], k=r.game_id+'|'+r.player_id;
+    if(prev){ prev.availability ||= new Map(); if(v===undefined) prev.availability.delete(k); else prev.availability.set(k,{game_id:r.game_id, player_id:r.player_id, status:v}); }
+    if(S.current===t.id) renderSoon();
+  });
+  ch.on('postgres_changes',{event:'*',schema:'public',table:'chirps',filter:`team_id=eq.${t.id}`},later);
+  ch.on('postgres_changes',{event:'*',schema:'public',table:'rides',filter:`team_id=eq.${t.id}`},later);
+  ch.on('postgres_changes',{event:'*',schema:'public',table:'ride_riders'},later);
+  ch.on('postgres_changes',{event:'*',schema:'public',table:'players',filter:`team_id=eq.${t.id}`},later);
+  ch.on('postgres_changes',{event:'*',schema:'public',table:'games',filter:`league_id=eq.${t.leagueId}`},later);
   ch.subscribe(); CLOUD.chans[t.id]=ch;
 }
 
@@ -2315,8 +2437,8 @@ const capTag=(t,p)=>isCoCap(t,p)?'<span class="crown" title="Captain" aria-label
 function allOurGames(t){ return [...t.games, ...(t.past||[]).flatMap(s=>s.games)].filter(g=>ours(t,g)); }
 function h2h(t,opp){ let w=0,l=0,d=0; allOurGames(t).filter(g=>g.final&&oppOf(t,g)===opp).forEach(g=>{ const r=resultOf(t,g); r.l==='W'?w++:r.l==='L'?l++:d++; }); return {w,l,d,n:w+l+d}; }
 function h2hLine(t,g){ const opp=oppOf(t,g), r=h2h(t,opp);
-  if(!r.n) return `<div class="h2h">First time playing ${esc(opp)}</div>`;
-  return `<div class="h2h">All-time vs ${esc(opp)}: <b>${r.w}–${r.l}${r.d||SPORTS[t.sport].ties?'–'+r.d:''}</b>${r.w>r.l?' 😎':r.l>r.w?' 😬':''}</div>`; }
+  if(!r.n) return `<div class="h2h">First time playing ${esc(opp)} · <button class="link" data-act="teampage" data-v="${esc(opp)}">Team page</button></div>`;
+  return `<div class="h2h">All-time vs ${esc(opp)}: <b>${r.w}–${r.l}${r.d||SPORTS[t.sport].ties?'–'+r.d:''}</b>${r.w>r.l?' 😎':r.l>r.w?' 😬':''} · <button class="link" data-act="teampage" data-v="${esc(opp)}">Team page</button></div>`; }
 
 /* ---------- venues ---------- */
 function venueInfo(t,g){
@@ -2576,7 +2698,7 @@ function hexDist(a,b){ const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)); t
 kitLine=function(t,g){
   const k=kitFor(t,g), J=jerseys(t)[k], opp=oppOf(t,g), oj=(t.oppJerseys||{})[opp]||(t.cloud?null:demoJersey(opp)), ok=oj?(oj[g.home===opp?'home':'away']||JERSEY_DEFAULT[g.home===opp?'home':'away']):null;
   const clash=ok&&hexDist(J.c,ok.c)<90;
-  return `<div class="kit"><span class="sw" style="background:${esc(J.c)}" aria-hidden="true"></span><span>Wear <b>${esc(J.n)}</b> <span class="meta">(${k})</span>${ok?` · ${esc(opp)} in <span class="sw sm" style="background:${esc(ok.c)}" aria-hidden="true"></span>${esc(ok.n)}`:''}</span>
+  return `<div class="kit"><span class="sw" style="background:${esc(J.c)}" aria-hidden="true"></span><span>Wear <b>${esc(J.n)}</b> <span class="meta">(${k})</span>${ok?` · ${esc(opp)} <span class="nw">in <span class="sw sm" style="background:${esc(ok.c)}" aria-hidden="true"></span>${esc(ok.n)}</span>`:''}</span>
     ${clash?'<span class="gtag warn">Colour clash</span>':''}${isCap()?`<button class="link" data-act="kitswap">Wear ${k==='home'?'away':'home'} instead</button>`:''}</div>`;
 };
 function jerseyFields(t){ const J=jerseys(t);
@@ -2672,6 +2794,163 @@ extraAct2=function(act,v,el,t,e){
   return _extraAct2c(act,v,el,t,e);
 };
 
+/* ================= round 10: team pages other teams can see ================= */
+const VENUE_WORD={hockey:'rink',rugby:'pitch',soccer:'field',basketball:'court',football:'field',baseball:'diamond'};
+function venueWord(t){ return VENUE_WORD[t.sport]||'venue'; }
+function nameHash(s){ let h=0; for(const ch of String(s)) h=(h*31+ch.charCodeAt(0))>>>0; return h; }
+function profileOf(t){ return {home:'', coaches:'', about:'', contactName:'', contact:true, showRoster:true, ...(t.profile||{})}; }
+function divOfTeam(t,name){ return allDivs(t).find(d=>d.teams.includes(name))||allDivs(t).find(d=>d.mine); }
+function formOf(t,d,name){ return d.games.filter(g=>g.final&&!g.cancelled&&(g.home===name||g.away===name)).sort((a,b)=>a.date.localeCompare(b.date)).slice(-5)
+  .map(g=>{ const us=g.home===name?g.hs:g.as, them=g.home===name?g.as:g.hs; return us>them?'W':us<them?'L':'D'; }); }
+function usualHome(t,d,name){ const c={}; d.games.filter(g=>g.home===name&&g.venue).forEach(g=>c[g.venue]=(c[g.venue]||0)+1); return (Object.entries(c).sort((a,b)=>b[1]-a[1])[0]||[''])[0]; }
+function shortPublic(first,last){ return `${first} ${last?last[0]+'.':''}`.trim(); }
+
+/* demo opponents get a made-up but stable page so the feature can be tried */
+function demoTeamPage(t,name){
+  const r=rng(nameHash(name)), pick=a=>a[Math.floor(r()*a.length)], sp=SPORTS[t.sport], ps=sp.positions.map(p=>p[0]);
+  const roster=Array.from({length:9+Math.floor(r()*5)},(_,i)=>({first:pick(FIRST), last:pick(LAST)[0]+'.', pos:ps[Math.floor(r()*ps.length)], num:1+Math.floor(r()*98), sub:i>10}));
+  const showRoster=r()>.25, about=pick(['Here for the beers, staying for the wins.','Old legs, good hands.','Undefeated in the parking lot.','New team this season. Be nice.','We bring the cooler.','']);
+  return {name, jerseys:demoJersey(name), profile:{home:'', coaches:r()>.6?`${pick(FIRST)} ${pick(LAST)}`:'', about, contact:r()>.2, showRoster},
+    captains:[`${pick(FIRST)} ${pick(LAST)[0]}.`], roster:showRoster?roster:null, onHeadcount:true};
+}
+function ownTeamPage(t){
+  const pr=profileOf(t), me=pById(t,S.me[t.id]);
+  return {name:t.name, jerseys:jerseys(t), profile:pr, captains:[pr.contactName||(isCap()&&me?shortPublic(me.first,me.last):'')].filter(Boolean),
+    roster:pr.showRoster?sortPlayers(t,rosterOnly(t)).filter(p=>!p.hide).map(p=>({first:p.first, last:(p.last||'')[0]?p.last[0]+'.':'', pos:p.pos, num:p.num, sub:p.sub})):null,
+    hidden:rosterOnly(t).filter(p=>p.hide).length, own:true, onHeadcount:true};
+}
+
+let TP=null;
+async function openTeamPage(t,name){
+  TP={name, data:null, loading:false, err:''};
+  if(name===t.name) TP.data=ownTeamPage(t);
+  else if(!t.cloud) TP.data=demoTeamPage(t,name);
+  else if(!t.hcTeams[name]) TP.data={name, onHeadcount:false};
+  else { TP.loading=true; renderTeamPage(); try{ const {data,error}=await CLOUD.sb.rpc('team_public',{t:t.hcTeams[name]}); if(error) throw error;
+      TP.data={name, jerseys:data.jerseys?{...JERSEY_DEFAULT,...data.jerseys}:JERSEY_DEFAULT, profile:{...profileOf({}), ...(data.profile||{})}, captains:data.captains||[], roster:data.roster, onHeadcount:true}; }
+    catch(e){ TP.err='Couldn’t load that team right now.'; TP.data={name, onHeadcount:true, profile:profileOf({}), captains:[], roster:null}; }
+    TP.loading=false; }
+  if(TP&&TP.name===name) renderTeamPage();
+}
+function renderTeamPage(){
+  const t=team(), name=TP.name, D=TP.data, d=divOfTeam(t,name), row=standings(t,d).find(r=>r.team===name), pos=standings(t,d).findIndex(r=>r.team===name)+1;
+  const sp=SPORTS[t.sport], form=formOf(t,d,name), pr=(D&&D.profile)||profileOf({}), J=D&&D.jerseys, home=pr.home||usualHome(t,d,name);
+  const nextVs=name===t.name?null:t.games.filter(g=>!g.final&&!g.cancelled&&ours(t,g)&&oppOf(t,g)===name).sort((a,b)=>a.date.localeCompare(b.date))[0];
+  const hh=name===t.name?null:h2h(t,name), cols=COLS[t.sport].filter(c=>['GP','P','W','L','D','T','OTL','PTS','PCT'].includes(c[0])), val=(r,k)=>typeof k==='function'?k(r):r[k];
+  const sw=k=>J?`<span class="tpjersey"><span class="sw" style="background:${esc(J[k].c)}"></span>${esc(J[k].n)} <span class="meta">${k}</span></span>`:'';
+  const body=TP.loading?'<p class="meta">Loading…</p>':`
+    ${TP.err?`<p class="err">${esc(TP.err)}</p>`:''}
+    <div class="tpstats">${row?`<div><b>${pos}${['th','st','nd','rd'][pos%10>3||[11,12,13].includes(pos%100)?0:pos%10]}</b><span>${esc(d.name)}</span></div>`+cols.map(c=>`<div><b>${val(row,c[1])}</b><span>${c[0]}</span></div>`).join(''):''}
+      <div class="tpform"><b class="tpf">${form.length?form.map(x=>`<i class="f${x}">${x}</i>`).join(''):'–'}</b><span>Last ${form.length||5}</span></div></div>
+    ${pr.about?`<p class="tpabout">“${esc(pr.about)}”</p>`:''}
+    <div class="tpgrid">
+      ${home?`<div class="tpitem"><span class="tplab">Home ${venueWord(t)}</span><a href="${esc((t.venues||{})[home]?.map||'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(home))}" target="_blank" rel="noopener">📍 ${esc(home)}</a></div>`:''}
+      ${J?`<div class="tpitem"><span class="tplab">Jerseys</span><span class="tpjs">${sw('home')}${sw('away')}</span></div>`:''}
+      ${D&&D.captains&&D.captains.length?`<div class="tpitem"><span class="tplab">Captain${D.captains.length>1?'s':''}</span><span>${D.captains.map(esc).join(', ')}</span></div>`:''}
+      ${pr.coaches?`<div class="tpitem"><span class="tplab">Coaches</span><span>${esc(pr.coaches)}</span></div>`:''}
+      ${hh?`<div class="tpitem"><span class="tplab">Vs ${esc(t.name)}</span><span>${hh.n?`${hh.w}–${hh.l}${hh.d||sp.ties?'–'+hh.d:''} all-time`:'Never played'}${nextVs?` · next ${fmtDate(nextVs.date)}`:''}</span></div>`:''}
+    </div>
+    ${D&&D.onHeadcount===false?'<p class="meta">This team isn’t on Headcount yet, so there’s no team page. Send their captain your league invite link.</p>':''}
+    ${D&&D.onHeadcount!==false?(D.roster?`<h3 class="tph">Roster <span class="meta">${D.roster.length}</span></h3><div class="tproster">${D.roster.map(p=>`<div class="tpp"><span class="tpnum">${p.num??''}</span><span class="ell">${esc(shortPublic(p.first,p.last.replace('.','')))}${p.sub?' <span class="meta">sub</span>':''}</span>${posChip(t,p)}</div>`).join('')}</div>${D.hidden?`<p class="meta sm">${D.hidden} player${D.hidden>1?'s have':' has'} chosen not to show their name.</p>`:''}`
+      :'<p class="meta">This team keeps its roster private.</p>'):''}
+    ${D&&D.own&&S.me[t.id]?`<label class="chk" style="margin-top:10px"><input type="checkbox" data-act="hideme" ${pById(t,S.me[t.id])?.hide?'checked':''}> Hide my name from other teams</label>`:''}
+    ${D&&D.own?`<p class="note">This is what other teams in ${esc(t.league)} see. No emails or phone numbers are ever shown.${isCap()?' Change it in <button class="link" data-act="settings">Team settings</button>.':''}</p>`:''}
+    <div id="tpmsg"></div>`;
+  const canMsg=D&&!D.own&&D.onHeadcount!==false&&pr.contact&&(isCap()||isOrg());
+  modalRoot().innerHTML=`<div class="overlay" data-act="close"><div class="modal tpmodal" role="dialog" aria-modal="true" aria-label="${esc(name)} team page" style="max-width:560px">
+    <div class="tphead" ${J?`style="--j1:${esc(J.home.c)};--j2:${esc(J.away.c)}"`:''}><span class="tpbadge">${esc(name.split(/\s+/).map(w=>w[0]).join('').slice(0,3).toUpperCase())}</span><div><h2 style="margin:0">${esc(name)}</h2><span class="meta">${esc(t.league.replace(/,?\s*Div(?:ision)?\.?\s*([A-Z]|\d+)\s*$/i,''))} · ${esc(d.name)}</span></div></div>
+    ${body}
+    <div class="actions" style="justify-content:flex-end">${canMsg?`<button class="btn" data-act="tpmsg">✉️ Message captain</button>`:''}<button class="btn primary" data-act="close">Done</button></div></div></div>`;
+}
+function openTeamMsg(){
+  document.getElementById('tpmsg').innerHTML=`<label class="fld"><span>Message to ${esc(TP.name)}’s captain</span><textarea class="inp" id="tpText" rows="4" maxlength="1000" placeholder="Hey, we’re short a goalie Thursday. Got anyone?"></textarea></label>
+    <p class="meta sm" style="margin:-6px 0 8px">They’ll get it by email and can reply to you directly. Your email is only shared with them.</p><div class="err" id="tpErr"></div>
+    <div class="actions" style="justify-content:flex-end;margin-top:0"><button class="btn primary" data-act="tpsend">Send</button></div>`;
+  document.getElementById('tpText').focus();
+}
+async function sendTeamMsg(t){
+  const msg=document.getElementById('tpText').value.trim(), err=document.getElementById('tpErr');
+  if(msg.length<5){ err.textContent='Write a little more first.'; return; }
+  if(!t.cloud){ document.getElementById('tpmsg').innerHTML='<p class="note">📨 In a live team this emails their captain. (Demo: nothing was sent.)</p>'; return; }
+  err.textContent='Sending…';
+  try{ const {data,error}=await CLOUD.sb.functions.invoke('send-reminders',{body:{mode:'contact', team_id:t.id, to_team:t.hcTeams[TP.name], message:msg}});
+    if(error){ let m=null; try{ m=(await error.context.json()).error; }catch(e){} throw new Error(m||'Email isn’t switched on yet for this league.'); }
+    document.getElementById('tpmsg').innerHTML=`<p class="note">📨 Sent to ${esc(TP.name)}’s captain.</p>`; }
+  catch(e){ err.textContent=e.message; }
+}
+
+/* team tiles for the League tab */
+function teamsCard(t){
+  const d=divSel(t,'div'), rows=standings(t,d);
+  return `<div class="card">${cardHd(`👥 Teams · ${esc(d.name)}`)}<p class="meta" style="margin:-4px 0 12px">Tap a team for their home ${venueWord(t)}, colours, captain and roster.</p>
+    <div class="tptiles">${rows.map(r=>{ const J=r.team===t.name?jerseys(t):t.cloud?((t.oppJerseys||{})[r.team]?{...JERSEY_DEFAULT,...t.oppJerseys[r.team]}:null):demoJersey(r.team);
+      return `<button class="tptile ${r.team===t.name?'us':''}" data-act="teampage" data-v="${esc(r.team)}">${J?`<span class="sw" style="background:${esc(J.home.c)}"></span>`:'<span class="sw" style="background:var(--surface2)"></span>'}<span class="ell">${esc(r.team)}</span><span class="meta sm">${r.w}–${r.l}${SPORTS[t.sport].ties||r.d?'–'+r.d:''}</span></button>`; }).join('')}</div></div>`;
+}
+function profileFields(t){ const pr=profileOf(t), venues=[...new Set(t.games.map(g=>g.venue).filter(Boolean))];
+  return `<div class="fldhd">Team page</div><p class="meta sm" style="margin:-2px 0 10px">Other teams in the league see this.</p>
+    <div class="fld2"><label class="fld"><span>Home ${venueWord(t)}</span><input class="inp" id="prHome" list="prVenues" maxlength="60" value="${esc(pr.home)}" placeholder="${esc(usualHome(t,divOfTeam(t,t.name),t.name)||'Where you usually play')}"><datalist id="prVenues">${venues.map(v=>`<option value="${esc(v)}">`).join('')}</datalist></label>
+      <label class="fld"><span>Contact name</span><input class="inp" id="prContactName" maxlength="40" value="${esc(pr.contactName)}" placeholder="e.g. Dev P."></label></div>
+    <label class="fld"><span>Coaches / staff</span><input class="inp" id="prCoaches" maxlength="80" value="${esc(pr.coaches)}" placeholder="Optional"></label>
+    <label class="fld"><span>About the team</span><input class="inp" id="prAbout" maxlength="140" value="${esc(pr.about)}" placeholder="e.g. Here for the beers"></label>
+    <label class="chk"><input type="checkbox" id="prRoster" ${pr.showRoster?'checked':''}> Show our roster (first name and last initial only)</label>
+    <label class="chk" style="margin-bottom:12px"><input type="checkbox" id="prContact" ${pr.contact?'checked':''}> Let other captains message us (by email, your address stays hidden until you reply)</label>`; }
+
+const _extraAct2d=extraAct2;
+extraAct2=function(act,v,el,t,e){
+  switch(act){
+    case 'teampage': openTeamPage(t,v); return false;
+    case 'tpmsg': openTeamMsg(); return false;
+    case 'tpsend': sendTeamMsg(t); return false;
+    case 'hideme': { const p=pById(t,S.me[t.id]); if(!p) return false; p.hide=el.checked;
+      if(t.cloud&&!isCap()) CLOUD.sb.rpc('set_hide_public',{p:p.id, v:p.hide}).then(({error})=>{ if(error) toast('Couldn’t save that. Try again.'); });
+      toast(p.hide?'Your name is hidden from other teams':'Your name shows on the team page'); TP.data=ownTeamPage(t); renderTeamPage(); save(); return false; }
+  }
+  return _extraAct2d(act,v,el,t,e);
+};
+
+/* ================= round 11: add to home screen ================= */
+let INSTALL_EVT=null;
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function installDismissed(){ try{ return localStorage.getItem('hc-install-dismissed')==='1'; }catch(e){ return true; } }
+function canSuggestInstall(){ return !isStandalone() && window.top===window && (INSTALL_EVT||isIOS()); }
+addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); INSTALL_EVT=e; if(S.tab==='next') render(); });
+addEventListener('appinstalled',()=>{ INSTALL_EVT=null; try{ localStorage.setItem('hc-install-dismissed','1'); }catch(e){} toast('Headcount is on your home screen 🎉'); render(); });
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost') && window.top===window && !/claude\.ai|anthropic|claudeusercontent/.test(location.hostname))
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+
+function installCard(){
+  if(!canSuggestInstall()||installDismissed()||!matchMedia('(pointer:coarse)').matches) return '';
+  return `<div class="card installcard"><img src="icons/icon-192.png" alt="" width="44" height="44"><div><b>Put Headcount on your home screen</b>
+    <span class="meta">Opens full screen like an app, one tap from the group chat.</span></div>
+    <div class="installbtns"><button class="btn primary small" data-act="install">${INSTALL_EVT?'Install':'Show me how'}</button><button class="btn small" data-act="installno" aria-label="Not now">Not now</button></div></div>`;
+}
+function openInstallHelp(){
+  modalRoot().innerHTML=`<div class="overlay" data-act="close"><div class="modal" role="dialog" aria-modal="true" style="max-width:420px">
+    <h2>Add Headcount to your home screen</h2>
+    ${isIOS()?`<ol class="steps"><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button <span class="kbd">⬆︎</span> at the bottom of the screen.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>. Headcount now opens full screen from its own icon.</li></ol>`
+      :`<ol class="steps"><li>Open this page in <b>Chrome</b>.</li><li>Tap the <b>⋮</b> menu at the top right.</li><li>Tap <b>Add to Home screen</b> (or <b>Install app</b>).</li><li>Tap <b>Install</b>. Headcount now opens full screen from its own icon.</li></ol>`}
+    <p class="meta sm">Your team, your name and your In/Out all carry over. Nothing to sign up for.</p>
+    <div class="actions" style="justify-content:flex-end"><button class="btn primary" data-act="close">Got it</button></div></div></div>`;
+}
+const _viewNextI=viewNext;
+viewNext=function(){ return installCard()+_viewNextI.apply(this,arguments); };
+const _themeMenuI=themeMenu;
+themeMenu=function(){ return _themeMenuI.apply(this,arguments)+(canSuggestInstall()?`<button data-act="install"><span style="font-size:20px">📱</span><span><b>Add to home screen</b><small>Opens full screen like an app</small></span></button>`:''); };
+const _applyThemeI=applyTheme;
+applyTheme=function(){ _applyThemeI.apply(this,arguments); const m=document.querySelector('meta[name=theme-color]'); if(m) m.content=document.documentElement.dataset.theme==='light'?'#f7f5fc':'#110c1d'; };
+
+const _extraAct2e=extraAct2;
+extraAct2=function(act,v,el,t,e){
+  switch(act){
+    case 'install': closeModal&&closeModal();
+      if(INSTALL_EVT){ const ev=INSTALL_EVT; INSTALL_EVT=null; ev.prompt(); ev.userChoice.finally(()=>render()); } else openInstallHelp(); return false;
+    case 'installno': try{ localStorage.setItem('hc-install-dismissed','1'); }catch(err){} render(); return false;
+  }
+  return _extraAct2e(act,v,el,t,e);
+};
+applyTheme();
+
 /* ---------- load state (after every helper exists) ---------- */
 try{ S=JSON.parse(localStorage.getItem(KEY)); }catch(e){ S=null; }
 if(!S || !S.teams || !S.order) S=demoState();
@@ -2739,6 +3018,7 @@ document.addEventListener('click', e=>{
       t.rem={hours:Number(document.getElementById('stRem').value), short:document.getElementById('stShort').checked}; const inn=document.getElementById('stInn'); if(inn) t.innLimit=Number(inn.value);
       const jv=id=>document.getElementById(id).value.trim(); t.jerseys={home:{c:jv('j_home_c'),n:jv('j_home_n')||'Home'}, away:{c:jv('j_away_c'),n:jv('j_away_n')||'Away'}};
       t.posColors=document.getElementById('stPosCol').checked;
+      { const pv=id=>document.getElementById(id); t.profile={home:pv('prHome').value.trim(), contactName:pv('prContactName').value.trim(), coaches:pv('prCoaches').value.trim(), about:pv('prAbout').value.trim(), showRoster:pv('prRoster').checked, contact:pv('prContact').checked}; }
       closeModal(); toast('Team updated'); break; }
     case 'delteam': { if(el.dataset.confirm!=='1'){ el.dataset.confirm='1'; el.textContent='Tap again to delete'; return; }
       if(t.cloud){ CLOUD.sb.from('teams').delete().eq('id',t.id).then(({error})=>{ if(error) toast(friendlyErr(error)); }); }

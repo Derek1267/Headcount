@@ -9,6 +9,7 @@
 //        { mode:'nudge', team_id, game_id }      email everyone who hasn't replied
 //        { mode:'subs',  team_id, game_id, positions? }  email the next sub in the call order
 //        { mode:'dues',  team_id }               email everyone who hasn't paid
+//        { mode:'contact', team_id, to_team, message }  email another team's captains (from a team page)
 //
 // Secrets (Edge Functions > Secrets): BREVO_API_KEY, FROM_EMAIL, FROM_NAME, SITE_URL, CRON_SECRET.
 // SUPABASE_URL, SUPABASE_ANON_KEY and SUPABASE_SERVICE_ROLE_KEY are provided by Supabase.
@@ -44,7 +45,7 @@ function vsLine(team: any, g: any) {
   return home ? `vs ${g.away_name}` : `@ ${g.home_name}`;
 }
 
-async function send(to: { email: string; name: string }[], subject: string, html: string) {
+async function send(to: { email: string; name: string }[], subject: string, html: string, replyTo?: { email: string; name?: string }) {
   if (!to.length) return 0;
   if (!env('BREVO_API_KEY')) throw new Error('BREVO_API_KEY is not set');
   let sent = 0;
@@ -53,16 +54,16 @@ async function send(to: { email: string; name: string }[], subject: string, html
     const res = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: { 'api-key': env('BREVO_API_KEY'), 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ sender: { email: env('FROM_EMAIL'), name: env('FROM_NAME') || 'Headcount' }, to: [r], subject, htmlContent: html }),
+      body: JSON.stringify({ sender: { email: env('FROM_EMAIL'), name: env('FROM_NAME') || 'Headcount' }, to: [r], subject, htmlContent: html, ...(replyTo ? { replyTo } : {}) }),
     });
     if (res.ok) sent++; else console.error('brevo', res.status, await res.text());
   }
   return sent;
 }
-const wrap = (team: any, body: string) => `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.5;color:#221a3a">
+const wrap = (team: any, body: string, foot = 'You get this because your captain added your email to the team.') => `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.5;color:#221a3a">
   <p style="font-weight:800;color:#7a4bd9;margin:0 0 12px">Headcount · ${esc(team.name)}</p>${body}
   <p><a href="${esc(env('SITE_URL'))}" style="display:inline-block;background:#7a4bd9;color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700">Open Headcount</a></p>
-  <p style="font-size:12px;color:#888">You get this because your captain added your email to the team.</p></div>`;
+  <p style="font-size:12px;color:#888">${foot}</p></div>`;
 
 async function teamBundle(teamId: string, gameId?: string) {
   const { data: team } = await admin.from('teams').select('*').eq('id', teamId).single();
@@ -127,6 +128,32 @@ async function dues(b: any) {
   return { sent, noEmail: todo.length - to.length };
 }
 
+// ---------- a captain messages another team's captains from their team page ----------
+async function contact(fromTeamId: string, user: any, body: any) {
+  const msg = String(body.message ?? '').trim().slice(0, 1000);
+  if (msg.length < 5) throw Object.assign(new Error('Write a little more first.'), { status: 400 });
+  if (!user.email) throw Object.assign(new Error('Sign in with email to message other teams.'), { status: 403 });
+  const { data: from } = await admin.from('teams').select('id,name,league_id').eq('id', fromTeamId).single();
+  const { data: to } = await admin.from('teams').select('id,name,league_id,settings').eq('id', body.to_team).single();
+  if (!from || !to || !from.league_id || from.league_id !== to.league_id || from.id === to.id)
+    throw Object.assign(new Error('You can only message teams in your league.'), { status: 403 });
+  if (to.settings?.profile?.contact === false) throw Object.assign(new Error('That team has turned off messages.'), { status: 403 });
+  const day = new Date(Date.now() - 864e5).toISOString(), hour = new Date(Date.now() - 36e5).toISOString();
+  const { data: recent } = await admin.from('contact_log').select('to_team,at').eq('sender', user.id).gt('at', day);
+  if ((recent ?? []).length >= 5) throw Object.assign(new Error('That’s 5 messages today. Try again tomorrow.'), { status: 429 });
+  if ((recent ?? []).some((r: any) => r.to_team === to.id && Date.parse(r.at) > Date.parse(hour))) throw Object.assign(new Error('You just messaged them. Give it an hour.'), { status: 429 });
+  const { data: caps } = await admin.from('team_members').select('user_id').eq('team_id', to.id).eq('role', 'captain');
+  const rcpts: { email: string; name: string }[] = [];
+  for (const c of caps ?? []) { const { data } = await admin.auth.admin.getUserById(c.user_id); if (data?.user?.email) rcpts.push({ email: data.user.email, name: `${to.name} captain` }); }
+  if (!rcpts.length) throw Object.assign(new Error('Their captain hasn’t set up email yet.'), { status: 404 });
+  await admin.from('contact_log').insert({ sender: user.id, to_team: to.id });
+  const sent = await send(rcpts, `Message from ${from.name}`, wrap(to,
+    `<p>The captain of <b>${esc(from.name)}</b> sent you a message through Headcount:</p>
+     <blockquote style="margin:0 0 12px;padding:10px 14px;border-left:3px solid #7a4bd9;background:#f6f2ff;white-space:pre-wrap">${esc(msg)}</blockquote>
+     <p>Just hit reply to answer them.</p>`, 'You get this because you captain a team in this league. Turn messages off in Team settings.'), { email: user.email, name: `${from.name} captain` });
+  return { sent };
+}
+
 // ---------- cron: every game in the next 3 days ----------
 async function cron() {
   const now = Date.now(), soon = new Date(now + 72 * 3600e3).toISOString();
@@ -166,6 +193,7 @@ Deno.serve(async (req) => {
     if (!uuid.test(body.team_id ?? '') || (body.game_id && !uuid.test(body.game_id))) return json({ error: 'Bad request' }, 400);
     const { data: m } = await admin.from('team_members').select('role').eq('team_id', body.team_id).eq('user_id', user.id).maybeSingle();
     if (m?.role !== 'captain') return json({ error: 'Only a captain can send team emails' }, 403);
+    if (body.mode === 'contact') { if (!uuid.test(body.to_team ?? '')) return json({ error: 'Bad request' }, 400); return json(await contact(body.team_id, user, body)); }
     if (body.mode === 'dues') return json(await dues(await teamBundle(body.team_id)));
     if (!body.game_id) return json({ error: 'Which game?' }, 400);
     const b = await teamBundle(body.team_id, body.game_id);
