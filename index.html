@@ -265,7 +265,7 @@ table.spirit td:nth-child(4),table.spirit th:nth-child(4){width:52px}
   .botnav button.on{color:var(--violet-2)}
   .botnav button.on svg{stroke-width:2.2}
   .wrap{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
-  .toast{bottom:calc(76px + env(safe-area-inset-bottom))}
+  .toast{bottom:calc(96px + env(safe-area-inset-bottom))}
   .ptable.paste{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 104px 34px}
   .ptable.paste .prow>*:first-child{display:none}
   .hand{display:none}
@@ -320,7 +320,7 @@ label.chk.online input{margin-top:3px}
 [data-theme=light] .pos.spec{background:rgba(168,104,12,.12);color:var(--gold)}
 [data-theme=light] .menu button:hover,[data-theme=light] .menu button.on,[data-theme=light] .sports button.on{background:#efe8ff}
 [data-theme=light] .teampick:hover,[data-theme=light] .btn:hover{border-color:#c9bce8}
-[data-theme=light] .botnav{background:#fff}
+
 [data-theme=light] .recap{background:linear-gradient(160deg,#f1eaff,#ffffff);border-color:#d6c9f5}
 [data-theme=light] .rstats div{background:rgba(122,75,217,.07)}
 [data-theme=light] .rb{border-top-color:rgba(29,21,48,.08)}
@@ -564,7 +564,19 @@ footer{color:var(--muted);font-size:12.5px;text-align:center;margin-top:24px}
 .wrap{padding-left:max(16px, env(safe-area-inset-left));padding-right:max(16px, env(safe-area-inset-right))}
 body{padding-top:env(safe-area-inset-top)}
 @media (display-mode: standalone){
-  .botnav{padding-left:max(14px, env(safe-area-inset-left));padding-right:max(14px, env(safe-area-inset-right));padding-bottom:calc(8px + max(env(safe-area-inset-bottom), 6px))}
+}
+
+/* floating island tab bar (phones) */
+@media (max-width:560px){
+  .botnav{left:max(12px, env(safe-area-inset-left));right:max(12px, env(safe-area-inset-right));bottom:calc(max(env(safe-area-inset-bottom), 10px) + 2px);
+    padding:5px;gap:2px;border:1px solid rgba(155,107,255,.22);border-radius:30px;background:rgba(26,19,48,.88);
+    -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 12px 32px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.05) inset}
+  .botnav button{min-height:50px;padding:5px 0;border-radius:24px;transition:background .15s,color .15s}
+  .botnav button.on{background:rgba(155,107,255,.18)}
+  .botnav button:active{background:rgba(155,107,255,.12)}
+  .toast{bottom:calc(max(env(safe-area-inset-bottom), 10px) + 78px)}
+  [data-theme=light] .botnav{background:rgba(255,255,255,.9);border-color:rgba(90,50,180,.14);box-shadow:0 10px 28px rgba(50,25,110,.18)}
+  [data-theme=light] .botnav button.on{background:rgba(122,75,217,.12)}
 }
 </style>
 </head>

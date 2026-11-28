@@ -1,6 +1,6 @@
 // Headcount service worker: lets it install like an app and open without signal.
 // Always tries the network first, so friends get updates as soon as you push them.
-const CACHE = 'headcount-v3';
+const CACHE = 'headcount-v4';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/favicon.svg'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener('activate', e => e.waitUntil(
