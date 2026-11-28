@@ -1,14 +1,27 @@
-# Headcount 🍻
+<p align="center">
+  <img src="logo.svg" alt="Headcount logo" width="96" height="96">
+</p>
 
-**Who's in, who won, who's buying.**
+<h1 align="center">Headcount 🍻</h1>
+
+<p align="center">
+  <strong>Who's in, who won, who's buying.</strong><br>
+  Hockey · Rugby · Soccer · Basketball · Flag football · Baseball/slo-pitch
+</p>
+
+<p align="center">
+  <a href="https://derek1267.github.io/Headcount/"><strong>▶ Try it: derek1267.github.io/Headcount</strong></a>
+</p>
+
+---
 
 A rec-league manager for beer-league and intramural teams. It handles availability, schedules, scores, standings, stats, lineups, and everything else a captain normally runs through a messy group chat. It's one HTML file with no app, accounts or build step.
 
-Supports **hockey, rugby, soccer, basketball, flag football and baseball/slo-pitch**, each with its own positions, formats, standings rules and stats.
+Each sport has its own positions, formats, standings rules and stats.
 
 ## Try it
 
-Open `index.html` in any browser. It loads with two demo teams (a hockey team and a rugby team) so you can click around right away.
+Open the [live site](https://derek1267.github.io/Headcount/), or open `index.html` in any browser. It loads with two demo teams (a hockey team and a rugby team) so you can click around right away.
 
 | Role | How to get in | Demo PIN |
 |---|---|---|
@@ -77,7 +90,7 @@ Never put the **secret** / **service_role** key in this file.
 
 ## Supabase setup (one time)
 
-1. **SQL Editor → New query**: paste `supabase/schema.sql` and run it. Then do the same with `supabase/002_more_features.sql` (guests, photos, seasons, league invites, calendar keys) `supabase/004_team_pages.sql` (team pages) and `supabase/005_hardening.sql` (security tidy-up). Run them in that order, once each.
+1. **SQL Editor → New query**: paste `supabase/schema.sql` and run it. Then do the same with `supabase/002_more_features.sql` (guests, photos, seasons, league invites, calendar keys), `supabase/004_team_pages.sql` (team pages) and `supabase/005_hardening.sql` (security tidy-up). Run them in that order, once each.
 2. **Authentication → Sign In / Providers**: turn on **Allow anonymous sign-ins** (players) and keep **Email** on (captains).
 3. **Authentication → URL Configuration**: set **Site URL** to your GitHub Pages address, e.g. `https://<your-username>.github.io/headcount/`, and add the same address under **Redirect URLs**. Sign-in links won't work without this.
 4. Optional: the built-in email service only sends 2 sign-in emails an hour, and only to people in your Supabase organization. If other captains or organizers need to sign in, add custom SMTP (Authentication → Emails → SMTP Settings) using a free provider.
@@ -124,13 +137,9 @@ These use two small Supabase Edge Functions in `supabase/functions/`. Without th
 
 **4. Turn on automatic reminders.** Open `supabase/003_reminder_cron.sql`, replace `YOUR-CRON-SECRET` with the same `CRON_SECRET`, and run it in the SQL Editor. Every 30 minutes it emails players who haven't replied (as many hours before the game as the captain picked in Team settings), and 24 hours out it emails the subs if the team is short.
 
-The same function sends **Message captain** emails from team pages. The other captain can just hit reply. Each captain can send 5 a day, and only to teams in their own league.
-
 What the captain buttons do once it's on: **Nudge** emails everyone who hasn't replied, **Ping subs** emails the next sub in the call order (tap again to ask the next one), and the dues **Remind** button emails whoever hasn't paid. Only captains can send, and only to players who have an email on file.
 
 **Bonus:** Brevo also gives you SMTP details (**SMTP & API → SMTP**). Put them in Supabase **Authentication → Emails → SMTP Settings** and sign-in links can go to anyone, not just your Supabase organization.
-
-Free Supabase projects pause after a week with no activity. Hit **Resume project** in the dashboard if that happens.
 
 Free Supabase projects pause after a week with no activity. Hit **Resume project** in the dashboard if that happens.
 
@@ -138,7 +147,7 @@ Free Supabase projects pause after a week with no activity. Hit **Resume project
 
 - One self-contained `index.html`: plain HTML, CSS and JavaScript with no framework and no build step
 - [Supabase](https://supabase.com) (Postgres, auth, realtime, storage for photos) via `supabase-js` from a CDN
-- `supabase/schema.sql`, `002_more_features.sql`, `003_reminder_cron.sql`, `004_team_pages.sql`: tables, security rules, helper functions and the reminder schedule
+- `supabase/schema.sql`, `002_more_features.sql`, `003_reminder_cron.sql`, `004_team_pages.sql`, `005_hardening.sql`: tables, security rules, helper functions and the reminder schedule
 - `manifest.webmanifest`, `sw.js`, `icons/`: the home-screen app icon and offline support
 - `supabase/functions/`: the reminder email and calendar feed Edge Functions (Deno, Brevo for email)
 - Fonts from Google Fonts (Bricolage Grotesque and Inter)
