@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Headcount</title>
 <meta name="description" content="Who's in, who won, who's buying. A rec and beer league team manager.">
 <link rel="manifest" href="manifest.webmanifest">
@@ -259,7 +259,7 @@ table.spirit td:nth-child(4),table.spirit th:nth-child(4){width:52px}
 .who button[disabled]{opacity:.35}
 @media (max-width:560px){
   nav.tabs{display:none}
-  .botnav{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:12;background:var(--bg);border-top:1px solid var(--line);padding:4px 2px calc(4px + env(safe-area-inset-bottom))}
+  .botnav{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:12;background:var(--bg);border-top:1px solid var(--line);padding:6px max(6px, env(safe-area-inset-right)) calc(6px + max(env(safe-area-inset-bottom), 4px)) max(6px, env(safe-area-inset-left))}
   .botnav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;min-height:52px;color:var(--muted);font-size:10.5px;font-weight:600}
   .botnav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .botnav button.on{color:var(--violet-2)}
@@ -559,6 +559,13 @@ footer{color:var(--muted);font-size:12.5px;text-align:center;margin-top:24px}
 .steps{margin:0 0 12px;padding-left:22px;display:grid;gap:8px}.kbd{display:inline-block;padding:0 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface2)}
 .steps li{font-weight:400}
 .shareic{width:20px;height:20px;vertical-align:-4px;color:var(--violet-2);margin:0 2px}
+
+/* iPhone: keep clear of the notch, the rounded corners and the home bar */
+.wrap{padding-left:max(16px, env(safe-area-inset-left));padding-right:max(16px, env(safe-area-inset-right))}
+body{padding-top:env(safe-area-inset-top)}
+@media (display-mode: standalone){
+  .botnav{padding-left:max(14px, env(safe-area-inset-left));padding-right:max(14px, env(safe-area-inset-right));padding-bottom:calc(8px + max(env(safe-area-inset-bottom), 6px))}
+}
 </style>
 </head>
 <body>
